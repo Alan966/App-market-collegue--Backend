@@ -2,6 +2,7 @@ import { IBuyer } from "../interfaces/BuyerInterface";
 import { Return_Error } from "../interfaces/error.interface";
 import { Buyer } from "../models/Buyer";
 import { returnError } from "../errors/handleErrors";
+import { v4 as uuidv4 } from "uuid";
 export class BuyerRepository {
   static async setBuyer(
     name: string,
@@ -9,6 +10,7 @@ export class BuyerRepository {
     email: string
   ): Promise<IBuyer> {
     const user = await Buyer.model.create({
+      id: uuidv4(),
       name: name,
       password: password,
       email: email,

@@ -4,3 +4,7 @@ export interface IVendor {
   password: string;
   email: string;
 }
+
+export interface IVendorToken extends IVendor {
+  token: string;
+}

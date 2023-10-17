@@ -2,6 +2,8 @@ import { returnError } from "../errors/handleErrors";
 import { IVendor } from "../interfaces/Vendorinterface";
 import { Return_Error } from "../interfaces/error.interface";
 import { Vendor } from "../models/Vendor";
+import { v4 as uuidv4 } from "uuid";
+
 export class VendorRepository {
   static async setVendor(
     name: string,
@@ -9,6 +11,7 @@ export class VendorRepository {
     email: string
   ): Promise<IVendor> {
     const user = await Vendor.model.create({
+      id: uuidv4(),
       name: name,
       password: password,
       email: email,

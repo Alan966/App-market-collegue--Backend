@@ -4,3 +4,6 @@ export interface IBuyer {
   password: string;
   email: string;
 }
+export interface IBuyerToken extends Omit<IBuyer, "password"> {
+  token: string;
+}

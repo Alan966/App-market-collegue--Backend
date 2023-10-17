@@ -12,7 +12,7 @@ export class VendorService {
     const checkUser = await VendorRepository.getVendor(email);
     if ("email" in checkUser) {
       const error = returnError(
-        500,
+        400,
         "USER_ALREADY_EXIST",
         "That email has been used yet"
       );
