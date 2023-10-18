@@ -1,10 +1,8 @@
-import { IBuyer, IBuyerToken } from "../interfaces/BuyerInterface";
-import { IVendor, IVendorToken } from "../interfaces/Vendorinterface";
-import { BuyerService } from "../services/buyerService";
+import { BuyerService } from "../services/Buyer.service";
 import { Return_Error } from "../interfaces/error.interface";
-import { VendorService } from "../services/vendorService";
+import { VendorService } from "../services/Vendor.service";
 import { returnError } from "../errors/handleErrors";
-type UserType = "buyer" | "vendor";
+import { IUser, IUserToken, UserType } from "../interfaces/User.interface";
 type createUser = {
   type: UserType;
   name: string;
@@ -20,14 +18,14 @@ export class UserFactory {
   static async createUser({
     type,
     name,
-    password,
     email,
-  }: createUser): Promise<IBuyer | IVendor | Return_Error> {
+    password,
+  }: createUser): Promise<IUser | Return_Error> {
     switch (type) {
       case "buyer":
-        return await BuyerService.createBuyerService(name, password, email);
+        return await BuyerService.createBuyer(name, email, password);
       case "vendor":
-        return await VendorService.createVendorService(name, password, email);
+        return await VendorService.createVendor(name, email, password);
       default:
         const error = returnError(
           500,
@@ -41,12 +39,12 @@ export class UserFactory {
     type,
     password,
     email,
-  }: Signin): Promise<IBuyerToken | IVendorToken | Return_Error> {
+  }: Signin): Promise<IUserToken | Return_Error> {
     switch (type) {
       case "buyer":
         return await BuyerService.getEntry(password, email);
-      // case "vendor":
-      //   return await VendorService.createVendorService(name, password, email);
+      case "vendor":
+        return await VendorService.getEntry(password, email);
       default:
         const error = returnError(
           500,

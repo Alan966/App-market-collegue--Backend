@@ -1,21 +1,22 @@
 import { returnError } from "../errors/handleErrors";
-import { IBuyer, IBuyerToken } from "../interfaces/BuyerInterface";
+import { IUser, IUserToken } from "../interfaces/User.interface";
 import { Return_Error } from "../interfaces/error.interface";
-import { BuyerRepository } from "../repositories/buyerRepository";
+import { Vendor } from "../repositories/Vendor.repository";
 import { Bcrypt } from "../utils/bcrypt.handle";
 import { JWT } from "../utils/jwt.handle";
-export class BuyerService {
-  static async createBuyerService(
+export class VendorService {
+  static async createVendor(
     name: string,
-    password: string,
-    email: string
-  ): Promise<IBuyer | Return_Error> {
-    const checkUser = await BuyerRepository.getBuyer(email);
-    if ("email" in checkUser) {
+    email: string,
+    password: string
+  ): Promise<IUser | Return_Error> {
+    const passHash = await Bcrypt.getEncrypt(password);
+    const newVendor = new Vendor(name, email, passHash);
+    if ((await Vendor.getUser(email)) !== null) {
       const error = returnError(
         400,
         "USER_ALREADY_EXIST",
-        "That  email has been used yet"
+        "That email has been used yet"
       );
       return {
         success: false,
@@ -23,16 +24,14 @@ export class BuyerService {
         error_code: error.error_code,
       };
     }
-    const passHash = await Bcrypt.getEncrypt(password);
-    return BuyerRepository.setBuyer(name, passHash, email);
+    return newVendor.createUser();
   }
   static async getEntry(
     password: string,
     email: string
-  ): Promise<IBuyerToken | Return_Error> {
-    const checkUser = await BuyerRepository.getBuyer(email);
-    console.log(checkUser);
-    if (!("email" in checkUser)) {
+  ): Promise<IUserToken | Return_Error> {
+    const vendorExist = await Vendor.getUser(email);
+    if (vendorExist === null) {
       const error = returnError(
         401,
         "USER_NOT_EXIST",
@@ -44,12 +43,12 @@ export class BuyerService {
         error_code: error.error_code,
       };
     }
-    const verify = await Bcrypt.verified(password, checkUser.password);
+    const verify = await Bcrypt.verified(password, vendorExist.password);
     if (!verify) {
       const error = returnError(
         401,
         "WRONG_PASSWORD",
-        "Need to use the correct password"
+        "NEED to use the correct password"
       );
       return {
         success: false,
@@ -57,11 +56,12 @@ export class BuyerService {
         error_code: error.error_code,
       };
     }
-    const token = JWT.generateToken({ user: checkUser.email }, "30d");
+
+    const token = JWT.generateToken({ user: vendorExist.email }, "30d");
     return {
-      id: checkUser.id,
-      name: checkUser.name,
-      email: checkUser.email,
+      id: vendorExist.id,
+      name: vendorExist.name,
+      email: vendorExist.email,
       token: token,
     };
   }
