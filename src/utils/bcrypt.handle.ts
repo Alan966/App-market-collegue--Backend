@@ -1,5 +1,4 @@
 import { hash, compare } from "bcryptjs";
-import { IBuyer } from "../interfaces/BuyerInterface";
 type password = string;
 export class Bcrypt {
   public static async getEncrypt(pass: password): Promise<password> {
