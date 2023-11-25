@@ -12,7 +12,6 @@ export class BuyerService {
   ): Promise<IUser | Return_Error> {
     const passHash = await Bcrypt.getEncrypt(password);
     const newBuyer = new Buyer(name, email, passHash);
-    console.log(await Buyer.getUser(email));
     if ((await Buyer.getUser(email)) !== null) {
       const error = returnError(
         400,

@@ -1,4 +1,5 @@
-import { User } from "./User.repository";
+import { UserType } from "../interfaces/User.interface";
+import { User } from "./fathers/User.repository";
 import { v4 as uuidv4 } from "uuid";
 export class Buyer extends User {
   constructor(
@@ -6,6 +7,6 @@ export class Buyer extends User {
     public email: string,
     public password: string
   ) {
-    super(uuidv4(), "buyer", name, email, password);
+    super(uuidv4(), UserType.BUYER, name, email, password);
   }
 }

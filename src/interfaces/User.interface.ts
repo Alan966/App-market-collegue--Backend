@@ -1,4 +1,7 @@
-export type UserType = "buyer" | "vendor";
+export enum UserType {
+  BUYER = "buyer",
+  VENDOR = "vendor",
+}
 export interface IUser {
   id: string;
   type: UserType;

@@ -22,9 +22,9 @@ export class UserFactory {
     password,
   }: createUser): Promise<IUser | Return_Error> {
     switch (type) {
-      case "buyer":
+      case UserType.BUYER:
         return await BuyerService.createBuyer(name, email, password);
-      case "vendor":
+      case UserType.VENDOR:
         return await VendorService.createVendor(name, email, password);
       default:
         const error = returnError(
@@ -41,9 +41,9 @@ export class UserFactory {
     email,
   }: Signin): Promise<IUserToken | Return_Error> {
     switch (type) {
-      case "buyer":
+      case UserType.BUYER:
         return await BuyerService.getEntry(password, email);
-      case "vendor":
+      case UserType.VENDOR:
         return await VendorService.getEntry(password, email);
       default:
         const error = returnError(

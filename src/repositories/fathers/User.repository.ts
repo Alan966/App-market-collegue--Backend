@@ -1,5 +1,5 @@
-import { IUser, UserType } from "../interfaces/User.interface";
-import { IUserModel, UserModel } from "../models/Users.model";
+import { IUser, UserType } from "../../interfaces/User.interface";
+import { IUserModel, UserModel } from "../../models/Users.model";
 
 export abstract class User implements IUser {
   constructor(

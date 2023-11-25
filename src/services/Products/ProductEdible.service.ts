@@ -1,11 +1,11 @@
-import { CustomRequest } from "../interfaces/req.interface";
+import { CustomRequest } from "../../interfaces/req.interface";
 import sharp, { Metadata } from "sharp";
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
-import { ProductEdible } from "../repositories/product.edible.respository";
-import { responseError, returnError } from "../errors/handleErrors";
+import { ProductEdible } from "../../repositories/product.edible.respository";
+import { returnError } from "../../errors/handleErrors";
 export class ProductEdibleService {
-  static async createProduct({ file, body }: CustomRequest) {
+  static async createProductEdible({ file, body }: CustomRequest) {
     const { name, category, price } = body;
     if (file) {
       const image_buffer = await this.uploadImage(file);

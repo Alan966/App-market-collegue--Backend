@@ -2,7 +2,6 @@ import { IProduct } from "../interfaces/product.Interface";
 import { Schema, model } from "mongoose";
 export interface IProductModel extends IProduct, Document {}
 // model mongoose
-export type ProductType = "comestible" | "no_comestible";
 const ProductSchema = new Schema<IProductModel>(
   {
     id: {
@@ -25,6 +24,21 @@ const ProductSchema = new Schema<IProductModel>(
     image: {
       data: Buffer,
       contentType: String,
+    },
+    quantity: {
+      type: Number,
+    },
+    createDate: {
+      type: String,
+    },
+    size: {
+      type: String,
+    },
+    color: {
+      type: String,
+    },
+    brand: {
+      type: String,
     },
   },
   {
