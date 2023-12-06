@@ -7,7 +7,11 @@ export class ProductEdible extends Product {
     public name: string,
     public category: string,
     public price: number,
-    public image: { data: Buffer; contentType: string }
+    public image: { data: Buffer; contentType: string },
+    public package_type: string,
+    public expired_date: string,
+    public ingredients: Array<string>,
+    public preparation_instructions: string
   ) {
     super(id, name, category, price, image);
   }

@@ -9,12 +9,7 @@ export interface IProduct {
   name: string;
   category: string;
   price: number;
-  image: Buffer;
-  quantity: number;
-  createDate: string;
-  size: string;
-  color: string;
-  brand: string;
+  image: { data: Buffer; contentType: string };
 }
 
 export enum ProductDiscount {
