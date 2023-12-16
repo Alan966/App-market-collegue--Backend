@@ -28,7 +28,22 @@ const ProductSchema = new Schema<IProductModel>(
     quantity: {
       type: Number,
     },
-    createDate: {
+    package_type: {
+      type: String,
+    },
+    create_date: {
+      type: String,
+    },
+    expired_date: {
+      type: String,
+    },
+    ingredients: {
+      type: String,
+    },
+    preparation_instructions: {
+      type: String,
+    },
+    type: {
       type: String,
     },
     size: {

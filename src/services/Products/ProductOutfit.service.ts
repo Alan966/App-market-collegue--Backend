@@ -4,12 +4,13 @@ import fs from "fs";
 import { ProductOutfit } from "../../repositories/product.outfit.respositorie";
 import { v4 as uuidv4 } from "uuid";
 import { returnError } from "../../errors/handleErrors";
+import { MiddleImage } from "../../middlewares/image.midleware";
 
 export class ProductOutfitService {
   static async createProductOutfit({ file, body }: CustomRequest) {
     const { name, category, price, size, color, brand } = body;
     if (file) {
-      const image_bufer = await this.upladImage(file);
+      const image_bufer = await MiddleImage.resizeImage(file.path);
       //   image_buffer
       const product = new ProductOutfit(
         uuidv4(),
@@ -21,6 +22,8 @@ export class ProductOutfitService {
         color,
         brand
       );
+      // delete file
+      MiddleImage.deleteFile(file.path);
       return product.createProduct();
     } else {
       const error = returnError(

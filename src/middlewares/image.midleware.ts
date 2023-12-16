@@ -1,6 +1,7 @@
 import multer, { FileFilterCallback } from "multer";
-import { Request } from "express";
 import { CustomRequest } from "../interfaces/req.interface";
+import fs from "fs";
+import sharp, { Metadata } from "sharp";
 interface CustomMulterFile extends Express.Multer.File {
   extension?: string;
 }
@@ -12,13 +13,12 @@ export class MiddleImage {
       file: CustomMulterFile,
       callback: FileFilterCallback
     ): void {
-      const file_extension = file.originalname
-        .split(".")
-        [file.originalname.split(".").length - 1].toLowerCase();
-      if (["png", "jpg", "jpeg"].indexOf(file_extension) === -1) {
+      const file_extension = file.originalname.split(".").pop();
+      const permit_extends = ["png", "jpg", "jpeg"];
+      if (!permit_extends.indexOf(file_extension ? file_extension : "")) {
         return callback(null, false);
       }
-      file.extension = file_extension.replace(/jpeg/i, "jpg");
+      file.extension = file_extension?.replace(/jpeg/i, "jpg");
       callback(null, true);
     },
     storage: multer.diskStorage({
@@ -32,4 +32,19 @@ export class MiddleImage {
       },
     }),
   });
+  static async resizeImage(file: string) {
+    const image_buffer = await sharp(file)
+      .metadata()
+      .then(function (metadata: Metadata) {
+        if (metadata.width !== undefined && metadata.width > 1800) {
+          return sharp(file).resize({ width: 1800 }).toBuffer();
+        } else {
+          return sharp(file).toBuffer();
+        }
+      });
+    return image_buffer;
+  }
+  static deleteFile(file: string) {
+    fs.rmSync(file, { force: true });
+  }
 }
