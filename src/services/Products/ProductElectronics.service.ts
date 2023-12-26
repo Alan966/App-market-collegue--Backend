@@ -1,14 +1,65 @@
-import sharp, { Metadata } from "sharp";
 import { CustomRequest } from "../../interfaces/req.interface";
-import fs from "fs";
 import { ProductElectronic } from "../../repositories/product.electronic.repository";
 import { v4 as uuidv4 } from "uuid";
 import { returnError } from "../../errors/handleErrors";
 import { MiddleImage } from "../../middlewares/image.midleware";
+import {
+  CategoryElectronicOptions,
+  SizeElectronicOptions,
+} from "../../interfaces/ProductsL1/electronic.interface";
 export class ProductElectronicService {
   static async createProductElectronic({ file, body }: CustomRequest) {
-    const { name, category, price, quantity, createData } = body;
+    const {
+      name,
+      category,
+      price,
+      quantity,
+      size,
+      color,
+      brand,
+      material,
+      voltage,
+      power,
+      screen_size,
+      processor,
+      memory,
+      storage,
+      connectivity,
+    } = body;
+    if (
+      !name ||
+      !category ||
+      !price ||
+      !quantity ||
+      !size ||
+      !color ||
+      !brand ||
+      !material
+    ) {
+      const error = returnError(
+        500,
+        "MISSING_DATA",
+        "Need to send all data of product"
+      );
+      return error;
+    }
     if (file) {
+      if (!this.isCategory(category)) {
+        const error = returnError(
+          500,
+          "MISSING_DATA",
+          "Need to send a correct category"
+        );
+        return error;
+      }
+      if (!this.isSize(size)) {
+        const error = returnError(
+          500,
+          "MISSING_DATA",
+          "Need to send a correct size"
+        );
+        return error;
+      }
       // image_buffer
       const image_buffer = await MiddleImage.resizeImage(file.path);
       const product = new ProductElectronic(
@@ -18,7 +69,17 @@ export class ProductElectronicService {
         parseFloat(price),
         { data: image_buffer, contentType: file.mimetype },
         quantity,
-        createData
+        size,
+        color,
+        brand,
+        material,
+        voltage,
+        power,
+        screen_size,
+        processor,
+        memory,
+        storage,
+        connectivity
       );
       // delete file
       MiddleImage.deleteFile(file.path);
@@ -31,5 +92,11 @@ export class ProductElectronicService {
       );
       return error;
     }
+  }
+  private static isCategory(category: CategoryElectronicOptions) {
+    return Object.values(CategoryElectronicOptions).includes(category);
+  }
+  private static isSize(size: SizeElectronicOptions) {
+    return Object.values(SizeElectronicOptions).includes(size);
   }
 }

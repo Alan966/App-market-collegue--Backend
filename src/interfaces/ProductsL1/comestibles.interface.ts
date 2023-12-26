@@ -21,3 +21,14 @@ export enum CategoryComestibles {
   ICE_PRODUCTS = "ice_products",
   SPECIAL_PRODUCTS = "special_products",
 }
+export interface IProductComestible extends IProduct {
+  quantity: number;
+  package_type: packageType;
+  create_date: string;
+  expired_date: string;
+  ingredients: string[];
+  preparation_instructions: string;
+  type: string;
+  size: string;
+  brand: string;
+}

@@ -1,4 +1,8 @@
 import { ProductDiscount } from "../interfaces/product.Interface";
+import {
+  IProductModelElectronic,
+  ProductModelElectronic,
+} from "../models/Product.model.electronic";
 import { Product } from "./fathers/product.repository";
 
 export class ProductElectronic extends Product {
@@ -9,12 +13,48 @@ export class ProductElectronic extends Product {
     public price: number,
     public image: { data: Buffer; contentType: string },
     public quantity: number,
-    public createDate: string
+    public size: string,
+    public color: string,
+    public brand: string,
+    public material: string,
+    public voltage: string,
+    public power: string,
+    public screen_size: string,
+    public processor: string,
+    public memory: string,
+    public storage: string,
+    public connectivity: string
   ) {
     super(id, name, category, price, image);
   }
   getQuantity() {
     return this.quantity;
+  }
+  createProduct(): Promise<IProductModelElectronic> {
+    return new Promise((resolve, reject) => {
+      const product_data = {
+        id: this.id,
+        name: this.name,
+        category: this.category,
+        price: this.price,
+        image: this.image,
+        quantity: this.quantity,
+        size: this.size,
+        color: this.color,
+        brand: this.brand,
+        material: this.material,
+        voltage: this.voltage,
+        power: this.power,
+        screen_size: this.screen_size,
+        processor: this.processor,
+        memory: this.memory,
+        storage: this.storage,
+        connectivity: this.connectivity,
+      };
+      ProductModelElectronic.create(product_data)
+        .then((product) => resolve(product))
+        .catch((err) => reject(err));
+    });
   }
   description(): string {
     return (

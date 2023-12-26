@@ -1,8 +1,8 @@
-import { IProduct } from "../interfaces/product.Interface";
+import { IProductElectronic } from "../interfaces/ProductsL1/electronic.interface";
 import { Schema, model } from "mongoose";
-export interface IProductModel extends IProduct, Document {}
+export interface IProductModelElectronic extends IProductElectronic, Document {}
 // model mongoose
-const ProductSchema = new Schema<IProductModel>(
+const ProductSchemaEdible = new Schema(
   {
     id: {
       type: String,
@@ -27,32 +27,43 @@ const ProductSchema = new Schema<IProductModel>(
     },
     quantity: {
       type: Number,
-    },
-    package_type: {
-      type: String,
-    },
-    create_date: {
-      type: String,
-    },
-    expired_date: {
-      type: String,
-    },
-    ingredients: {
-      type: String,
-    },
-    preparation_instructions: {
-      type: String,
-    },
-    type: {
-      type: String,
+      required: true,
     },
     size: {
       type: String,
+      required: true,
     },
     color: {
       type: String,
+      required: true,
     },
     brand: {
+      type: String,
+      required: true,
+    },
+    material: {
+      type: String,
+      required: true,
+    },
+    voltage: {
+      type: String,
+    },
+    power: {
+      type: String,
+    },
+    screen_size: {
+      type: String,
+    },
+    processor: {
+      type: String,
+    },
+    memory: {
+      type: String,
+    },
+    storage: {
+      type: String,
+    },
+    connectivity: {
       type: String,
     },
   },
@@ -62,4 +73,7 @@ const ProductSchema = new Schema<IProductModel>(
   }
 );
 
-export const ProductModel = model<IProductModel>("Product", ProductSchema);
+export const ProductModelElectronic = model<IProductModelElectronic>(
+  "ProductElectronic",
+  ProductSchemaEdible
+);

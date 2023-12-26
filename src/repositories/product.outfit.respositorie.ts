@@ -1,4 +1,8 @@
 import { ProductDiscount } from "../interfaces/product.Interface";
+import {
+  IProductModelOutfit,
+  ProductModelOutfit,
+} from "../models/Product.model.outfit";
 import { Product } from "./fathers/product.repository";
 
 export class ProductOutfit extends Product {
@@ -10,9 +14,38 @@ export class ProductOutfit extends Product {
     public image: { data: Buffer; contentType: string },
     public size: string,
     public color: string,
-    public brand: string
+    public brand: string,
+    public material: string,
+    public garden: string,
+    public style: string,
+    public season: string,
+    public range: string,
+    public female: string
   ) {
     super(id, name, category, price, image);
+  }
+  async createProduct(): Promise<IProductModelOutfit> {
+    return new Promise((resolve, reject) => {
+      const product_data = {
+        id: this.id,
+        name: this.name,
+        category: this.category,
+        price: this.price,
+        image: this.image,
+        size: this.size,
+        color: this.color,
+        brand: this.brand,
+        material: this.material,
+        garden: this.garden,
+        style: this.style,
+        season: this.season,
+        range: this.range,
+        female: this.female,
+      };
+      ProductModelOutfit.create(product_data)
+        .then((product) => resolve(product))
+        .catch((err) => reject(err));
+    });
   }
   description(): string {
     return (

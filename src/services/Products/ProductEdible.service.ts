@@ -20,6 +20,8 @@ export class ProductEdibleService {
       ingredients,
       preparation_instructions,
       type,
+      size,
+      brand,
     } = body;
     if (
       !name ||
@@ -31,7 +33,9 @@ export class ProductEdibleService {
       !expired_date ||
       !ingredients ||
       !preparation_instructions ||
-      !type
+      !type ||
+      !size ||
+      !brand
     ) {
       const error = returnError(
         500,
@@ -70,7 +74,9 @@ export class ProductEdibleService {
         expired_date,
         ingredients,
         preparation_instructions,
-        type
+        type,
+        size,
+        brand
       );
       // delete image
       MiddleImage.deleteFile(file.path);
@@ -85,7 +91,7 @@ export class ProductEdibleService {
       return error;
     }
   }
-  static isPackageType(package_type: string): boolean {
+  private static isPackageType(package_type: string): boolean {
     let isPackageType = false;
     switch (package_type) {
       case packageType.BOX:
@@ -115,7 +121,7 @@ export class ProductEdibleService {
     }
     return isPackageType;
   }
-  static isCategory(category: string): boolean {
+  private static isCategory(category: string): boolean {
     let create = false;
     switch (category) {
       case CategoryComestibles.BEBIDAS:
