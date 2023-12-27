@@ -12,6 +12,7 @@ export class ProductOutfit extends Product {
     public category: string,
     public price: number,
     public image: { data: Buffer; contentType: string },
+    public user: string,
     public size: string,
     public color: string,
     public brand: string,
@@ -22,7 +23,7 @@ export class ProductOutfit extends Product {
     public range: string,
     public female: string
   ) {
-    super(id, name, category, price, image);
+    super(id, name, category, price, image, user);
   }
   async createProduct(): Promise<IProductModelOutfit> {
     return new Promise((resolve, reject) => {
@@ -32,6 +33,7 @@ export class ProductOutfit extends Product {
         category: this.category,
         price: this.price,
         image: this.image,
+        user: this.user,
         size: this.size,
         color: this.color,
         brand: this.brand,

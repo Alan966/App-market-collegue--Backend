@@ -8,7 +8,11 @@ import {
   SizeElectronicOptions,
 } from "../../interfaces/ProductsL1/electronic.interface";
 export class ProductElectronicService {
-  static async createProductElectronic({ file, body }: CustomRequest) {
+  static async createProductElectronic({
+    file,
+    body,
+    username,
+  }: CustomRequest) {
     const {
       name,
       category,
@@ -43,7 +47,7 @@ export class ProductElectronicService {
       );
       return error;
     }
-    if (file) {
+    if (file && username) {
       if (!this.isCategory(category)) {
         const error = returnError(
           500,
@@ -68,6 +72,7 @@ export class ProductElectronicService {
         category,
         parseFloat(price),
         { data: image_buffer, contentType: file.mimetype },
+        username,
         quantity,
         size,
         color,

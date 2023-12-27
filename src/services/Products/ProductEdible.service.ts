@@ -8,7 +8,7 @@ import {
 } from "../../interfaces/ProductsL1/comestibles.interface";
 import { MiddleImage } from "../../middlewares/image.midleware";
 export class ProductEdibleService {
-  static async createProductEdible({ file, body }: CustomRequest) {
+  static async createProductEdible({ file, body, username }: CustomRequest) {
     const {
       name,
       category,
@@ -52,7 +52,7 @@ export class ProductEdibleService {
       );
       return error;
     }
-    if (file) {
+    if (file && username) {
       if (!this.isCategory(category)) {
         const error = returnError(
           500,
@@ -68,6 +68,7 @@ export class ProductEdibleService {
         category,
         parseFloat(price),
         { data: image_buffer, contentType: file.mimetype },
+        username,
         quantity,
         package_type,
         create_date,

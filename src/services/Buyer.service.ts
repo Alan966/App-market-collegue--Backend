@@ -56,12 +56,16 @@ export class BuyerService {
         error_code: error.error_code,
       };
     }
-    const token = JWT.generateToken({ user: buyerExist.email }, "30d");
+    const token = JWT.generateToken(
+      { user: buyerExist.email, type: buyerExist.type },
+      "30d"
+    );
     return {
       id: buyerExist.id,
       name: buyerExist.name,
       email: buyerExist.email,
       token: token,
+      type: buyerExist.type,
     };
   }
 }

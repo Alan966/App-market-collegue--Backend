@@ -25,6 +25,10 @@ const ProductSchemaEdible = new Schema<IProductModelEdible>(
       data: Buffer,
       contentType: String,
     },
+    user: {
+      type: String,
+      required: true,
+    },
     quantity: {
       type: Number,
     },

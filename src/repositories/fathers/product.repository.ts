@@ -8,7 +8,8 @@ export abstract class Product {
     public name: string,
     public category: string,
     public price: number,
-    public image: { data: Buffer; contentType: string }
+    public image: { data: Buffer; contentType: string },
+    public user: string
   ) {}
   abstract createProduct(): Promise<
     IProductModelEdible | IProductModelOutfit | IProductModelElectronic

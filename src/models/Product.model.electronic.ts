@@ -25,6 +25,10 @@ const ProductSchemaEdible = new Schema(
       data: Buffer,
       contentType: String,
     },
+    user: {
+      type: String,
+      required: true,
+    },
     quantity: {
       type: Number,
       required: true,

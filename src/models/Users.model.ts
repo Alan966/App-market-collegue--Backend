@@ -25,6 +25,9 @@ const UserSchema = new Schema<IUserModel>(
       type: String,
       required: true,
     },
+    profits: {
+      type: Number,
+    },
   },
   {
     timestamps: true,

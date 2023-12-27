@@ -24,6 +24,10 @@ const ProductSchemaOutfit = new Schema<IProductModelOutfit>({
     data: Buffer,
     contentType: String,
   },
+  user: {
+    type: String,
+    required: true,
+  },
   size: {
     type: String,
     required: true,

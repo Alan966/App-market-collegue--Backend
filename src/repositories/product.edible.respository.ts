@@ -13,6 +13,7 @@ export class ProductEdible extends Product {
     public category: string,
     public price: number,
     public image: { data: Buffer; contentType: string },
+    public user: string,
     public quantity: number,
     public package_type: packageType,
     public create_date: string,
@@ -23,7 +24,7 @@ export class ProductEdible extends Product {
     public size: string,
     public brand: string
   ) {
-    super(id, name, category, price, image);
+    super(id, name, category, price, image, user);
   }
   description(): string {
     return (
@@ -46,6 +47,7 @@ export class ProductEdible extends Product {
         category: this.category,
         price: this.price,
         image: this.image,
+        user: this.user,
         quantity: this.quantity,
         package_type: this.package_type,
         create_date: this.create_date,

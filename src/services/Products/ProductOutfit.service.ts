@@ -14,7 +14,7 @@ import {
 } from "../../interfaces/ProductsL1/outift.interface";
 
 export class ProductOutfitService {
-  static async createProductOutfit({ file, body }: CustomRequest) {
+  static async createProductOutfit({ file, body, username }: CustomRequest) {
     const {
       name,
       category,
@@ -50,7 +50,7 @@ export class ProductOutfitService {
       );
       return error;
     }
-    if (file) {
+    if (file && username) {
       if (!this.isCategory(category)) {
         const error = returnError(
           400,
@@ -86,6 +86,7 @@ export class ProductOutfitService {
         category,
         parseFloat(price),
         { data: image_bufer, contentType: file.mimetype },
+        username,
         size,
         color,
         brand,

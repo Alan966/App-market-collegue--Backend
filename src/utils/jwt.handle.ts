@@ -1,9 +1,10 @@
 import "dotenv/config";
-import { TokenExpiredError, sign, verify } from "jsonwebtoken";
+import { JwtPayload, TokenExpiredError, sign, verify } from "jsonwebtoken";
+import { IUserToken } from "../interfaces/User.interface";
 type token = string;
 type responseToken = {
   is_expired: boolean;
-  payload: Object | null;
+  payload: null | string | JwtPayload;
 };
 export class JWT {
   static decodeToken(token: token): responseToken | null {

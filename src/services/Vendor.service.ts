@@ -57,12 +57,16 @@ export class VendorService {
       };
     }
 
-    const token = JWT.generateToken({ user: vendorExist.email }, "30d");
+    const token = JWT.generateToken(
+      { name: vendorExist.email, type: vendorExist.type },
+      "30d"
+    );
     return {
       id: vendorExist.id,
       name: vendorExist.name,
       email: vendorExist.email,
       token: token,
+      type: vendorExist.type,
     };
   }
 }

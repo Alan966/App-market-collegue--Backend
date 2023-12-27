@@ -12,6 +12,7 @@ export class ProductElectronic extends Product {
     public category: string,
     public price: number,
     public image: { data: Buffer; contentType: string },
+    public user: string,
     public quantity: number,
     public size: string,
     public color: string,
@@ -25,7 +26,7 @@ export class ProductElectronic extends Product {
     public storage: string,
     public connectivity: string
   ) {
-    super(id, name, category, price, image);
+    super(id, name, category, price, image, user);
   }
   getQuantity() {
     return this.quantity;
@@ -38,6 +39,7 @@ export class ProductElectronic extends Product {
         category: this.category,
         price: this.price,
         image: this.image,
+        user: this.user,
         quantity: this.quantity,
         size: this.size,
         color: this.color,

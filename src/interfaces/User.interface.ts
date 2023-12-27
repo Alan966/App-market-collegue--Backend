@@ -8,8 +8,10 @@ export interface IUser {
   name: string;
   email: string;
   password: string;
+  profits?: number;
 }
 
-export interface IUserToken extends Omit<IUser, "password" | "type"> {
+export interface IUserToken extends Omit<IUser, "password"> {
   token: string;
+  type: UserType;
 }
