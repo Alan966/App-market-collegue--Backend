@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response, response } from "express";
 import { ProductFactory } from "../factories/productFactory";
 import { CustomRequest } from "../interfaces/req.interface";
 import { returnError } from "../errors/handleErrors";
@@ -35,11 +35,34 @@ export class ProductController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const products = await ProductFactory.getProducts(req);
-      if (products && "success" in products) {
-        res.status(products.error_code).json({
+      const response_products: any = await ProductFactory.getProducts(req);
+      if (response_products && !response_products.success) {
+        res.status(response_products.error_code).json({
           success: false,
-          error: products.error,
+          error: response_products.error,
+        });
+        return;
+      }
+      res.status(200).json(response_products);
+    } catch (query_error) {
+      const error = returnError(500, "ERR_GET_PRODUCTS", `${query_error}`);
+      res.status(error.error_code).json({
+        success: false,
+        error: error.error,
+      });
+    }
+  }
+  static async getAllProducts(
+    req: CustomRequest,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const products = await ProductFactory.getAllProducts();
+      if (products && !products.success) {
+        res.status(500).json({
+          success: false,
+          error: products,
         });
         return;
       }

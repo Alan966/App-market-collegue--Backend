@@ -18,4 +18,7 @@ router.post(
     await ProductController.getProducts(req, res, next);
   }
 );
+router.get("/get-all-products", async (req, res, next) => {
+  await ProductController.getAllProducts(req, res, next);
+});
 export { router };

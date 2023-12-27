@@ -49,11 +49,25 @@ export class ProductOutfit extends Product {
         .catch((err) => reject(err));
     });
   }
-  static getProducts(): Promise<IProductModelOutfit[]> {
+  static getProducts(object: any) {
     return new Promise((resolve, reject) => {
-      ProductModelOutfit.find()
-        .then((products) => resolve(products))
-        .catch((err) => reject(err));
+      ProductModelOutfit.find({}, object)
+        .then((products) =>
+          resolve({
+            success: true,
+            products: products,
+          })
+        )
+        .catch((err) =>
+          reject({
+            success: false,
+            error: {
+              code: "ERROR_GET_PRODUCTS",
+              status: err,
+            },
+            error_code: 500,
+          })
+        );
     });
   }
   description(): string {

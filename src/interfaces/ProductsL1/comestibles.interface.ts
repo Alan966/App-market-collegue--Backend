@@ -1,4 +1,6 @@
+import { IProductModelEdible } from "../../models/Product.model.edible";
 import { IProduct } from "../product.Interface";
+import { SuccessResponse } from "../success.response.interface";
 export enum packageType {
   BOX = "box",
   PLASTIC_BAG = "plastic_bag",
@@ -31,4 +33,7 @@ export interface IProductComestible extends IProduct {
   type: string;
   size: string;
   brand: string;
+}
+export interface IGetProductsResponse extends Omit<SuccessResponse, "data"> {
+  products: IProductModelEdible[];
 }

@@ -1,4 +1,4 @@
-import { ProductType } from "../interfaces/product.Interface";
+import { IProduct, ProductType } from "../interfaces/product.Interface";
 import { ProductEdibleService } from "../services/Products/ProductEdible.service";
 import { CustomRequest } from "../interfaces/req.interface";
 import { returnError } from "../errors/handleErrors";
@@ -26,14 +26,17 @@ export class ProductFactory {
   }
   static getProducts(req: CustomRequest) {
     const type: ProductType = req.body.type;
+    const avoid_image = {
+      image: 0,
+    };
     switch (type) {
       case ProductType.COMESTIBLE:
         console.log("entro");
-        return ProductEdibleService.getProductsEdible();
+        return ProductEdibleService.getProductsEdible(avoid_image);
       case ProductType.VESTIMENTA:
-        return ProductOutfitService.getProductsOutfit();
+        return ProductOutfitService.getProductsOutfit(avoid_image);
       case ProductType.ELECTRONICA:
-        return ProductElectronicService.getProductsElectronic();
+        return ProductElectronicService.getProductsElectronic(avoid_image);
       default:
         const error = returnError(
           500,
@@ -42,5 +45,32 @@ export class ProductFactory {
         );
         return error;
     }
+  }
+  static async getAllProducts() {
+    let all_products: any[] = [];
+    const include_body = {
+      _id: 1,
+      name: 1,
+      category: 1,
+      price: 1,
+      user: 1,
+    };
+    await Promise.all([
+      ProductEdibleService.getProductsEdible(include_body),
+      ProductOutfitService.getProductsOutfit(include_body),
+      ProductElectronicService.getProductsElectronic(include_body),
+    ]).then((values: any) => {
+      values.forEach((value: any) => {
+        if (value.success) {
+          all_products = [...all_products, ...value.products];
+        } else {
+          return value;
+        }
+      });
+    });
+    return {
+      success: true,
+      products: all_products,
+    };
   }
 }

@@ -1,4 +1,8 @@
-import { packageType } from "../interfaces/ProductsL1/comestibles.interface";
+import {
+  IGetProductsResponse,
+  packageType,
+} from "../interfaces/ProductsL1/comestibles.interface";
+import { Response_Error } from "../interfaces/error.interface";
 import { ProductDiscount } from "../interfaces/product.Interface";
 import {
   IProductModelEdible,
@@ -63,11 +67,25 @@ export class ProductEdible extends Product {
         .catch((err) => reject(err));
     });
   }
-  static getProducts(): Promise<IProductModelEdible[]> {
+  static getProducts(object: any) {
     return new Promise((resolve, reject) => {
-      ProductModelEdible.find()
-        .then((products) => resolve(products))
-        .catch((err) => reject(err));
+      ProductModelEdible.find({}, object)
+        .then((products) =>
+          resolve({
+            success: true,
+            products: products,
+          })
+        )
+        .catch((err) =>
+          reject({
+            success: false,
+            error: {
+              code: "ERROR_GETTING_PRODUCTS",
+              status: err,
+            },
+            error_code: 500,
+          })
+        );
     });
   }
 }

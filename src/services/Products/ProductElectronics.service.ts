@@ -98,9 +98,9 @@ export class ProductElectronicService {
       return error;
     }
   }
-  static async getProductsElectronic() {
+  static async getProductsElectronic(avoid: any) {
     try {
-      return ProductElectronic.getProducts();
+      return ProductElectronic.getProducts(avoid);
     } catch (error) {
       const err = returnError(500, "ERROR_GETTING_PRODUCTS", `${error}`);
       return err;

@@ -4,9 +4,11 @@ import { ProductEdible } from "../../repositories/product.edible.respository";
 import { returnError } from "../../errors/handleErrors";
 import {
   CategoryComestibles,
+  IGetProductsResponse,
   packageType,
 } from "../../interfaces/ProductsL1/comestibles.interface";
 import { MiddleImage } from "../../middlewares/image.midleware";
+import { Return_Error } from "../../interfaces/error.interface";
 export class ProductEdibleService {
   static async createProductEdible({ file, body, username }: CustomRequest) {
     const {
@@ -92,9 +94,9 @@ export class ProductEdibleService {
       return error;
     }
   }
-  static getProductsEdible() {
+  static async getProductsEdible(avoid: any) {
     try {
-      return ProductEdible.getProducts();
+      return await ProductEdible.getProducts(avoid);
     } catch (error) {
       const err = returnError(
         500,
