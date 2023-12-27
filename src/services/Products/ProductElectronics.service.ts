@@ -98,6 +98,14 @@ export class ProductElectronicService {
       return error;
     }
   }
+  static async getProductsElectronic() {
+    try {
+      return ProductElectronic.getProducts();
+    } catch (error) {
+      const err = returnError(500, "ERROR_GETTING_PRODUCTS", `${error}`);
+      return err;
+    }
+  }
   private static isCategory(category: CategoryElectronicOptions) {
     return Object.values(CategoryElectronicOptions).includes(category);
   }

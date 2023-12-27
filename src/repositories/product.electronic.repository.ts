@@ -58,6 +58,13 @@ export class ProductElectronic extends Product {
         .catch((err) => reject(err));
     });
   }
+  static getProducts(): Promise<IProductModelElectronic[]> {
+    return new Promise((resolve, reject) => {
+      ProductModelElectronic.find()
+        .then((products) => resolve(products))
+        .catch((err) => reject(err));
+    });
+  }
   description(): string {
     return (
       "Este es un producto electronico nombre " +

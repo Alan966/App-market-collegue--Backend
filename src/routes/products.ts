@@ -9,7 +9,13 @@ router.post(
   MiddleUsers.isVendor,
   MiddleImage.beginMulter.single("product_picture"),
   async (req: CustomRequest, res: Response, next: NextFunction) => {
-    ProductController.createProduct(req, res, next);
+    await ProductController.createProduct(req, res, next);
+  }
+);
+router.post(
+  "/get-products-by-category",
+  async (req: CustomRequest, res: Response, next: NextFunction) => {
+    await ProductController.getProducts(req, res, next);
   }
 );
 export { router };

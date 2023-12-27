@@ -29,4 +29,30 @@ export class ProductController {
       });
     }
   }
+  static async getProducts(
+    req: CustomRequest,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const products = await ProductFactory.getProducts(req);
+      if (products && "success" in products) {
+        res.status(products.error_code).json({
+          success: false,
+          error: products.error,
+        });
+        return;
+      }
+      res.status(200).json({
+        success: true,
+        products: products,
+      });
+    } catch (query_error) {
+      const error = returnError(500, "ERR_GET_PRODUCTS", `${query_error}`);
+      res.status(error.error_code).json({
+        success: false,
+        error: error.error,
+      });
+    }
+  }
 }

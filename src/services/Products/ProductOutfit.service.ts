@@ -109,6 +109,14 @@ export class ProductOutfitService {
       return error;
     }
   }
+  static async getProductsOutfit() {
+    try {
+      return ProductOutfit.getProducts();
+    } catch (error) {
+      const err = returnError(500, "ERROR_GET_PRODUCTS", `${error}`);
+      return err;
+    }
+  }
   private static FemaleOptions(female: FemaleOptions): boolean {
     return Object.values(FemaleOptions).includes(female);
   }

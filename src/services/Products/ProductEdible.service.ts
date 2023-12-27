@@ -92,6 +92,18 @@ export class ProductEdibleService {
       return error;
     }
   }
+  static getProductsEdible() {
+    try {
+      return ProductEdible.getProducts();
+    } catch (error) {
+      const err = returnError(
+        500,
+        "ERROR_GETTING_PRODUCTS",
+        "Error getting products"
+      );
+      return err;
+    }
+  }
   private static isPackageType(package_type: string): boolean {
     let isPackageType = false;
     switch (package_type) {

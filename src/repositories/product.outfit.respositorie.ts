@@ -49,6 +49,13 @@ export class ProductOutfit extends Product {
         .catch((err) => reject(err));
     });
   }
+  static getProducts(): Promise<IProductModelOutfit[]> {
+    return new Promise((resolve, reject) => {
+      ProductModelOutfit.find()
+        .then((products) => resolve(products))
+        .catch((err) => reject(err));
+    });
+  }
   description(): string {
     return (
       "Este es un producto vestimenta nombre " +

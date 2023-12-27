@@ -24,4 +24,23 @@ export class ProductFactory {
         return error;
     }
   }
+  static getProducts(req: CustomRequest) {
+    const type: ProductType = req.body.type;
+    switch (type) {
+      case ProductType.COMESTIBLE:
+        console.log("entro");
+        return ProductEdibleService.getProductsEdible();
+      case ProductType.VESTIMENTA:
+        return ProductOutfitService.getProductsOutfit();
+      case ProductType.ELECTRONICA:
+        return ProductElectronicService.getProductsElectronic();
+      default:
+        const error = returnError(
+          500,
+          "TYPE_PRODUCT_NOT_FOUND",
+          "That isn't a type of product"
+        );
+        return error;
+    }
+  }
 }

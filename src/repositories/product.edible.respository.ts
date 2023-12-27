@@ -63,4 +63,11 @@ export class ProductEdible extends Product {
         .catch((err) => reject(err));
     });
   }
+  static getProducts(): Promise<IProductModelEdible[]> {
+    return new Promise((resolve, reject) => {
+      ProductModelEdible.find()
+        .then((products) => resolve(products))
+        .catch((err) => reject(err));
+    });
+  }
 }
