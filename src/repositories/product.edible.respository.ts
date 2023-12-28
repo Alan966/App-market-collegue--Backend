@@ -88,4 +88,25 @@ export class ProductEdible extends Product {
         );
     });
   }
+  static updateProduct(find_by: any, update: any) {
+    return new Promise((resolve, reject) => {
+      ProductModelEdible.findOneAndUpdate(find_by, update)
+        .then((product) =>
+          resolve({
+            success: true,
+            product: product,
+          })
+        )
+        .catch((err) =>
+          reject({
+            success: false,
+            error: {
+              code: "ERROR_UPDATING_PRODUCT",
+              status: err,
+            },
+            error_code: 500,
+          })
+        );
+    });
+  }
 }

@@ -106,6 +106,21 @@ export class ProductElectronicService {
       return err;
     }
   }
+  static async updateProductElectronic({ body }: CustomRequest) {
+    if (!body.id) {
+      const error = returnError(500, "MISSING_DATA", "Need to send product id");
+      return error;
+    }
+    const id = body.id;
+    delete body.type;
+    delete body.id;
+    try {
+      return ProductElectronic.updateProduct({ id }, body);
+    } catch (error) {
+      const err = returnError(500, "ERROR_UPDATING_PRODUCT", `${error}`);
+      return err;
+    }
+  }
   private static isCategory(category: CategoryElectronicOptions) {
     return Object.values(CategoryElectronicOptions).includes(category);
   }

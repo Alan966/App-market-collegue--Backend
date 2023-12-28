@@ -104,6 +104,25 @@ export class ProductEdibleService {
       return err;
     }
   }
+  static async updateProductEdible({ body }: CustomRequest) {
+    if (!body.id) {
+      const error = returnError(500, "MISSING_DATA", "Need to send product id");
+      return error;
+    }
+    const id = body.id;
+    delete body.id;
+    delete body.type;
+    try {
+      return await ProductEdible.updateProduct({ id }, body);
+    } catch (error) {
+      const err = returnError(
+        500,
+        "ERROR_UPDATING_PRODUCT",
+        "Error updating product"
+      );
+      return err;
+    }
+  }
   private static isPackageType(package_type: string): boolean {
     let isPackageType = false;
     switch (package_type) {

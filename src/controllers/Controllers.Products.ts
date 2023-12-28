@@ -104,4 +104,30 @@ export class ProductController {
       });
     }
   }
+  static async updateProduct(
+    req: CustomRequest,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const product: any = await ProductFactory.updateProduct(req);
+      if (product && !product.success) {
+        res.status(500).json({
+          success: false,
+          error: product,
+        });
+        return;
+      }
+      res.status(200).json({
+        success: true,
+        product: product,
+      });
+    } catch (query_error) {
+      const error = returnError(500, "ERR_UPDATE_PRODUCT", `${query_error}`);
+      res.status(error.error_code).json({
+        success: false,
+        error: error.error,
+      });
+    }
+  }
 }

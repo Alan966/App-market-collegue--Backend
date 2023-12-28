@@ -79,6 +79,27 @@ export class ProductElectronic extends Product {
         );
     });
   }
+  static updateProduct(find_by: any, update: any) {
+    return new Promise((resolve, reject) => {
+      ProductModelElectronic.findOneAndUpdate(find_by, update)
+        .then((product) => {
+          resolve({
+            success: true,
+            product: product,
+          });
+        })
+        .catch((err) => {
+          reject({
+            success: false,
+            error: {
+              code: "ERROR_UPDATING_PRODUCT",
+              status: err,
+            },
+            error_code: 500,
+          });
+        });
+    });
+  }
   description(): string {
     return (
       "Este es un producto electronico nombre " +

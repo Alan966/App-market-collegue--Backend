@@ -117,6 +117,21 @@ export class ProductOutfitService {
       return err;
     }
   }
+  static async updateProductOutfit({ body }: CustomRequest) {
+    if (!body.id) {
+      const error = returnError(500, "MISSING_DATA", "Need to send product id");
+      return error;
+    }
+    const id = body.id;
+    delete body.type;
+    delete body.id;
+    try {
+      return ProductOutfit.updateProduct(id, body);
+    } catch (error) {
+      const err = returnError(500, "ERROR_UPDATING_PRODUCT", `${error}`);
+      return err;
+    }
+  }
   private static FemaleOptions(female: FemaleOptions): boolean {
     return Object.values(FemaleOptions).includes(female);
   }

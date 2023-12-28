@@ -98,4 +98,22 @@ export class ProductFactory {
         return error;
     }
   }
+  static async updateProduct(req: CustomRequest) {
+    const type: ProductType = req.body.type;
+    switch (type) {
+      case ProductType.COMESTIBLE:
+        return ProductEdibleService.updateProductEdible(req);
+      case ProductType.VESTIMENTA:
+        return ProductOutfitService.updateProductOutfit(req);
+      case ProductType.ELECTRONICA:
+        return ProductElectronicService.updateProductElectronic(req);
+      default:
+        const error = returnError(
+          500,
+          "TYPE_PRODUCT_NOT_FOUND",
+          "That isn't a type of product"
+        );
+        return error;
+    }
+  }
 }
