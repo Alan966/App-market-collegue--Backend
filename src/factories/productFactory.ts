@@ -32,11 +32,11 @@ export class ProductFactory {
     switch (type) {
       case ProductType.COMESTIBLE:
         console.log("entro");
-        return ProductEdibleService.getProductsEdible(avoid_image);
+        return ProductEdibleService.getProductsEdible({}, avoid_image);
       case ProductType.VESTIMENTA:
-        return ProductOutfitService.getProductsOutfit(avoid_image);
+        return ProductOutfitService.getProductsOutfit({}, avoid_image);
       case ProductType.ELECTRONICA:
-        return ProductElectronicService.getProductsElectronic(avoid_image);
+        return ProductElectronicService.getProductsElectronic({}, avoid_image);
       default:
         const error = returnError(
           500,
@@ -56,9 +56,9 @@ export class ProductFactory {
       user: 1,
     };
     await Promise.all([
-      ProductEdibleService.getProductsEdible(include_body),
-      ProductOutfitService.getProductsOutfit(include_body),
-      ProductElectronicService.getProductsElectronic(include_body),
+      ProductEdibleService.getProductsEdible({}, include_body),
+      ProductOutfitService.getProductsOutfit({}, include_body),
+      ProductElectronicService.getProductsElectronic({}, include_body),
     ]).then((values: any) => {
       values.forEach((value: any) => {
         if (value.success) {
@@ -72,5 +72,30 @@ export class ProductFactory {
       success: true,
       products: all_products,
     };
+  }
+  static async getProductsByUser(req: CustomRequest) {
+    const type: ProductType = req.body.type;
+    const user = req.username;
+    const avoid_image = {
+      image: 0,
+    };
+    switch (type) {
+      case ProductType.COMESTIBLE:
+        return ProductEdibleService.getProductsEdible({ user }, avoid_image);
+      case ProductType.VESTIMENTA:
+        return ProductOutfitService.getProductsOutfit({ user }, avoid_image);
+      case ProductType.ELECTRONICA:
+        return ProductElectronicService.getProductsElectronic(
+          { user },
+          avoid_image
+        );
+      default:
+        const error = returnError(
+          500,
+          "TYPE_PRODUCT_NOT_FOUND",
+          "That isn't a type of product"
+        );
+        return error;
+    }
   }
 }

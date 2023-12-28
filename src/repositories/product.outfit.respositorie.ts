@@ -49,9 +49,9 @@ export class ProductOutfit extends Product {
         .catch((err) => reject(err));
     });
   }
-  static getProducts(object: any) {
+  static getProducts(find_by: any, object: any) {
     return new Promise((resolve, reject) => {
-      ProductModelOutfit.find({}, object)
+      ProductModelOutfit.find(find_by, object)
         .then((products) =>
           resolve({
             success: true,

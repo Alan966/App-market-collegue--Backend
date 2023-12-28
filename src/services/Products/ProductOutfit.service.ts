@@ -109,9 +109,9 @@ export class ProductOutfitService {
       return error;
     }
   }
-  static async getProductsOutfit(avoid: any) {
+  static async getProductsOutfit(find_by: any, avoid: any) {
     try {
-      return ProductOutfit.getProducts(avoid);
+      return ProductOutfit.getProducts(find_by, avoid);
     } catch (error) {
       const err = returnError(500, "ERROR_GET_PRODUCTS", `${error}`);
       return err;

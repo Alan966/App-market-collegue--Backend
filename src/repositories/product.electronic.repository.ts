@@ -58,9 +58,9 @@ export class ProductElectronic extends Product {
         .catch((err) => reject(err));
     });
   }
-  static getProducts(object: any) {
+  static getProducts(find_by: any, object: any) {
     return new Promise((resolve, reject) => {
-      ProductModelElectronic.find({}, object)
+      ProductModelElectronic.find(find_by, object)
         .then((products) =>
           resolve({
             success: true,

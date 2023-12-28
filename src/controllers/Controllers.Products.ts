@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, response } from "express";
+import { NextFunction, Response } from "express";
 import { ProductFactory } from "../factories/productFactory";
 import { CustomRequest } from "../interfaces/req.interface";
 import { returnError } from "../errors/handleErrors";
@@ -59,6 +59,32 @@ export class ProductController {
   ) {
     try {
       const products = await ProductFactory.getAllProducts();
+      if (products && !products.success) {
+        res.status(500).json({
+          success: false,
+          error: products,
+        });
+        return;
+      }
+      res.status(200).json({
+        success: true,
+        products: products,
+      });
+    } catch (query_error) {
+      const error = returnError(500, "ERR_GET_PRODUCTS", `${query_error}`);
+      res.status(error.error_code).json({
+        success: false,
+        error: error.error,
+      });
+    }
+  }
+  static async getProductsByUser(
+    req: CustomRequest,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const products: any = await ProductFactory.getProductsByUser(req);
       if (products && !products.success) {
         res.status(500).json({
           success: false,

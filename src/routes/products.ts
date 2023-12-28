@@ -21,4 +21,11 @@ router.post(
 router.get("/get-all-products", async (req, res, next) => {
   await ProductController.getAllProducts(req, res, next);
 });
+router.post(
+  "/get-products-vendor-by-category",
+  MiddleUsers.isVendor,
+  async (req, res, next) => {
+    await ProductController.getProductsByUser(req, res, next);
+  }
+);
 export { router };
