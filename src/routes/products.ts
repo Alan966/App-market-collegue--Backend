@@ -31,8 +31,8 @@ router.post(
     await ProductController.getProductsByUser(req, res, next);
   }
 );
-router.post(
-  "/update-product-by-id",
+router.put(
+  "/update-product-vendor-by-id",
   MiddleUsers.isVendor,
   async (req: CustomRequest, res: Response, next: NextFunction) => {
     await ProductController.updateProduct(req, res, next);

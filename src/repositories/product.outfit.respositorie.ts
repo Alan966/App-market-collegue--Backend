@@ -84,7 +84,7 @@ export class ProductOutfit extends Product {
             success: false,
             error: {
               code: "ERROR_UPDATING_PRODUCT",
-              status: err,
+              status: `${err}`,
             },
             error_code: 500,
           });

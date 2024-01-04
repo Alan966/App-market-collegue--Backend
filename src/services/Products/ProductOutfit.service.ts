@@ -126,7 +126,7 @@ export class ProductOutfitService {
     delete body.type;
     delete body.id;
     try {
-      return ProductOutfit.updateProduct(id, body);
+      return ProductOutfit.updateProduct({ id }, body);
     } catch (error) {
       const err = returnError(500, "ERROR_UPDATING_PRODUCT", `${error}`);
       return err;
